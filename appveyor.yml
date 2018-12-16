@@ -16,5 +16,10 @@ build_script:
   - yarn lint
   - yarn test
   - yarn build
+  - echo //registry.npmjs.org/:_authToken=%NPM_TOKEN% > .npmrc
+  - npm publish .
+
+after_build:
+  - del .npmrc
 
 test: off

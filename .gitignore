@@ -1,3 +1,6 @@
+# npm publish files
+.npmrc
+
 # Logs
 logs
 *.log
