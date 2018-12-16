@@ -1,0 +1,44 @@
+{
+  "name": "windows-system-icon",
+  "description": "Extract the associated system icon on Windows",
+  "version": "0.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "keywords": [
+    "associated",
+    "convert",
+    "exctract",
+    "file",
+    "icon",
+    "system",
+    "windows"
+  ],
+  "browser": false,
+  "repository": "git@github.com:oliverschwendener/windows-system-icon.git",
+  "author": {
+    "email": "oliver.schwendener@hotmail.com",
+    "name": "Oliver Schwendener",
+    "url": "https://github.com/oliverschwendener"
+  },
+  "homepage": "https://github.com/oliverschwendener/windows-system-icon",
+
+  "os": [
+    "win32"
+  ],
+  "scripts": {
+    "build": "./node_modules/.bin/tsc",
+    "watch": "./node_modules/.bin/tsc --watch",
+    "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
+    "test": "./node_modules/.bin/mocha"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-powershell": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node-powershell": "^3.1.0",
+    "mocha": "^5.2.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
+  }
+}
