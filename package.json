@@ -1,7 +1,7 @@
 {
   "name": "windows-system-icon",
   "description": "Extract the associated system icon on Windows",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "types": "index.d.ts",
   "keywords": [
@@ -21,7 +21,6 @@
     "url": "https://github.com/oliverschwendener"
   },
   "homepage": "https://github.com/oliverschwendener/windows-system-icon",
-
   "os": [
     "win32"
   ],
