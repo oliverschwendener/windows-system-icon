@@ -17,15 +17,17 @@ before_test:
 test_script:
   - yarn lint
   - yarn test
-  - yarn build
-
-build:
-  on:
-    APPVEYOR_REPO_TAG: true
 
 build_script:
+  - yarn build
+
+deploy:
+  - on:
+    APPVEYOR_REPO_TAG: true
+
+deploy_script:
   - echo //registry.npmjs.org/:_authToken=%NPM_TOKEN% > .npmrc
   - npm publish .
 
-after_build:
+after_deploy:
   - del .npmrc
