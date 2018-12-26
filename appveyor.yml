@@ -8,20 +8,16 @@ platform:
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
+  - node --version
   - yarn install
+  - yarn --version
 
-before_test:
-- node --version
-- yarn --version
-
-test_script:
+test:
   - yarn lint
   - yarn test
   - yarn build
 
-build_script:
+build:
   - echo //registry.npmjs.org/:_authToken=%NPM_TOKEN% > .npmrc
   - npm publish .
-
-after_build:
   - del .npmrc
