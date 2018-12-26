@@ -1,4 +1,4 @@
-import { generateIcons, Icon } from "../index";
+import { generateIcons, Icon } from "../src/index";
 
 const icons: Icon[] = [
     {

@@ -1,4 +1,4 @@
-import { generateIcons } from "../index";
+import { generateIcons } from "../dist/index";
 
 const icons = [
     {

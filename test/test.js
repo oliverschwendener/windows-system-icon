@@ -1,4 +1,4 @@
-const windowsSystemIcon = require("../index");
+const windowsSystemIcon = require("../dist/index");
 const path = require("path");
 const fs = require("fs");
 
