@@ -1,6 +1,9 @@
+
 # windows-system-icon
 
 Extract the associated file icons with Node.js using Powershell on Windows.
+
+[![Build status](https://ci.appveyor.com/api/projects/status/y6sm905f0gu36trq?svg=true)](https://ci.appveyor.com/project/oliverschwendener/windows-system-icon)
 
 ## Requirements
 
