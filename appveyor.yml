@@ -1,8 +1,6 @@
 environment:
   nodejs_version: "8"
 
-skip_non_tags: true
-
 install:
   - ps: Install-Product node $env:nodejs_version
   - node --version
@@ -14,7 +12,15 @@ test_script:
   - yarn build
   - yarn test
 
-build_script:
+build: off
+
+deploy:
+- provider: Script
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: true
+
+deploy_script:
   - echo //registry.npmjs.org/:_authToken=%NPM_TOKEN% > .npmrc
   - npm publish .
   - del .npmrc
