@@ -28,7 +28,7 @@
     "build": "./node_modules/.bin/tsc",
     "watch": "./node_modules/.bin/tsc --watch",
     "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
-    "test": "./node_modules/.bin/mocha --timeout 10000"
+    "test": "./node_modules/.bin/mocha --timeout 20000"
   },
   "license": "MIT",
   "dependencies": {
