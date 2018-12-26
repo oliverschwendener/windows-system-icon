@@ -13,16 +13,6 @@ test_script:
   - yarn lint
   - yarn build
   - yarn test
+  - powershell deploy.ps1
 
 build: off
-
-deploy:
-- provider: Script
-  on:
-    branch: master
-    APPVEYOR_REPO_TAG: true
-
-deploy_script:
-  - echo //registry.npmjs.org/:_authToken=%NPM_TOKEN% > .npmrc
-  - npm publish .
-  - del .npmrc
