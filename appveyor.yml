@@ -1,13 +1,20 @@
 environment:
   nodejs_version: "8"
 
+skip_non_tags: true
+
 install:
   - ps: Install-Product node $env:nodejs_version
   - node --version
   - yarn --version
+  - yarn install
 
 test_script:
-  - yarn install
   - yarn lint
   - yarn build
   - yarn test
+
+build_script:
+  - echo //registry.npmjs.org/:_authToken=%NPM_TOKEN% > .npmrc
+  - npm publish .
+  - del .npmrc
