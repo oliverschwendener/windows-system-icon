@@ -21,9 +21,6 @@
     "url": "https://github.com/oliverschwendener"
   },
   "homepage": "https://github.com/oliverschwendener/windows-system-icon",
-  "os": [
-    "win32"
-  ],
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "watch": "./node_modules/.bin/tsc --watch",
