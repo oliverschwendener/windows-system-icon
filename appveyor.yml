@@ -2,7 +2,12 @@ environment:
   nodejs_version: "8"
 
 install:
-  - ps: Install-Product node $env:nodejs_version $env:platform
+  - ps: Install-Product node $env:nodejs_version
   - node --version
-  - yarn install
   - yarn --version
+
+test_script:
+  - yarn install
+  - yarn lint
+  - yarn build
+  - yarn test
