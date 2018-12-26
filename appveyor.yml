@@ -8,18 +8,24 @@ platform:
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - node --version
   - yarn install
-  - yarn --version
 
-build_script:
+before_test:
+- node --version
+- yarn --version
+
+test_script:
   - yarn lint
   - yarn test
   - yarn build
+
+build:
+  on:
+    APPVEYOR_REPO_TAG: true
+
+build_script:
   - echo //registry.npmjs.org/:_authToken=%NPM_TOKEN% > .npmrc
   - npm publish .
 
 after_build:
   - del .npmrc
-
-test: off
