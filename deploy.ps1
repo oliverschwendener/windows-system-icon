@@ -1,9 +1,4 @@
-if($env:appveyor_repo_tag -eq 'True') {
-    Write-Host "Deploying to NPM";
-    $npm_token = $env:NPM_TOKEN;
-    "//registry.npmjs.org/:_authToken=$($npm_token)" | Out-File .npmrc;
-    npm publish .;
-    Remove-Item .npmrc;
-} else {
-    Write-Host "Skipping deployment to NPM";
-}
+$npm_rc = ".\.npmrc";
+"registry=""//registry.npmjs.org/:_authToken=$($env:NPM_TOKEN)""" | Out-File $npm_rc;
+npm publish .;
+Remove-Item $npm_rc;
