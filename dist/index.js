@@ -28,7 +28,7 @@ const getValidationOutput = (icons) => {
         isValid: true,
     };
 };
-exports.generateIcons = (icons) => {
+exports.generateIcons = (icons, followShortcuts) => {
     return new Promise((resolve, reject) => {
         const validationOutput = getValidationOutput(icons);
         if (!validationOutput.isValid) {
@@ -42,8 +42,12 @@ exports.generateIcons = (icons) => {
             });
             ps.addCommand(`Add-Type -AssemblyName System.Drawing`);
             icons.forEach((icon) => {
-                ps.addCommand(`$fileExists = Test-Path -Path "${icon.inputFilePath}";`);
-                ps.addCommand(`if($fileExists) { $icon = [System.Drawing.Icon]::ExtractAssociatedIcon("${icon.inputFilePath}"); }`);
+                ps.addCommand(`$filePath = "${icon.inputFilePath}"`);
+                if (followShortcuts) {
+                    ps.addCommand(`if ($filePath.EndsWith(".lnk")) { Try { $sh = New-Object -ComObject WScript.Shell; $filePath = $sh.CreateShortcut($filePath).TargetPath; } Catch { <# do nothing #> } }`);
+                }
+                ps.addCommand(`$fileExists = Test-Path -Path $filePath;`);
+                ps.addCommand(`if($fileExists) { $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($filePath); }`);
                 ps.addCommand(`if($fileExists) { $bitmap = $icon.ToBitmap().save("${icon.outputFilePath}", [System.Drawing.Imaging.ImageFormat]::${icon.outputFormat}); }`);
             });
             ps.invoke()

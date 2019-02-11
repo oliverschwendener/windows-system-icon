@@ -8,10 +8,8 @@ const icons = [
     },
 ];
 
-generateIcons(icons)
-    .then(() => {
-        console.log("Done!")
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+const followShortcuts = false; // this parameter is optional
+
+generateIcons(icons, followShortcuts)
+    .then(() => console.log("Done!"))
+    .catch((err) => console.log(err));

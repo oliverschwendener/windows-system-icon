@@ -3,4 +3,4 @@ export interface Icon {
     outputFilePath: string;
     outputFormat: string;
 }
-export declare const generateIcons: (icons: Icon[]) => Promise<void>;
+export declare const generateIcons: (icons: Icon[], followShortcuts?: boolean | undefined) => Promise<void>;

@@ -20,7 +20,7 @@ npm install windows-system-icon
 ### TypeScript
 
 ``` typescript
-import { generateIcons, Icon } from "windows-system-icon";
+import { generateIcons, Icon } from "../dist/index";
 
 const icons: Icon[] = [
     {
@@ -30,18 +30,16 @@ const icons: Icon[] = [
     },
 ];
 
-generateIcons(icons)
-    .then(() => {
-        console.log("Done!");
-    })
-    .then((err) => {
-        console.log(err);
-    });
+const followShortcuts = false; // this parameter is optional
+
+generateIcons(icons, followShortcuts)
+    .then(() => console.log("Done!"))
+    .catch((err) => console.log(err));
 ```
 
 ### JavaScript
 ``` javascript
-import { generateIcons } from "windows-system-icon";
+import { generateIcons } from "../dist/index";
 
 const icons = [
     {
@@ -51,14 +49,11 @@ const icons = [
     },
 ];
 
-generateIcons(icons)
-    .then(() => {
-        console.log("Done!")
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+const followShortcuts = false; // this parameter is optional
 
+generateIcons(icons, followShortcuts)
+    .then(() => console.log("Done!"))
+    .catch((err) => console.log(err));
 ```
 
 ### Supported output formats
@@ -82,7 +77,16 @@ Add-Type -AssemblyName System.Drawing
 
 $fileExists = Test-Path -Path "<input-file-path>";
 
-if($fileExists) {
+if ($fileExists) {
+    if ($filePath.EndsWith(".lnk")) {
+        Try {
+            $sh = New-Object -ComObject WScript.Shell;
+            $filePath = $sh.CreateShortcut($filePath).TargetPath;
+        }
+        Catch {
+            <# do nothing #>
+        }
+    }
     $icon = [System.Drawing.Icon]::ExtractAssociatedIcon("<input-file-path>");
     $bitmap = $icon.ToBitmap().save("<output-file-path>", [System.Drawing.Imaging.ImageFormat]::<output-format>); 
 }
