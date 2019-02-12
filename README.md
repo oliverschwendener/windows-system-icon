@@ -75,18 +75,20 @@ Here is the powershell script that gets executed in the background:
 ``` powershell
 Add-Type -AssemblyName System.Drawing
 
-$fileExists = Test-Path -Path "<input-file-path>";
+$filePath = "<input-file-path>";
+$fileExists = Test-Path -Path $filePath;
+
+if ($fileExists -and $filePath.EndsWith(".lnk")) {
+    Try {
+        $sh = New-Object -ComObject WScript.Shell;
+        $filePath = $sh.CreateShortcut($filePath).TargetPath;
+    }
+    Catch {
+        <# do nothing #>
+    }
+}
 
 if ($fileExists) {
-    if ($filePath.EndsWith(".lnk")) {
-        Try {
-            $sh = New-Object -ComObject WScript.Shell;
-            $filePath = $sh.CreateShortcut($filePath).TargetPath;
-        }
-        Catch {
-            <# do nothing #>
-        }
-    }
     $icon = [System.Drawing.Icon]::ExtractAssociatedIcon("<input-file-path>");
     $bitmap = $icon.ToBitmap().save("<output-file-path>", [System.Drawing.Imaging.ImageFormat]::<output-format>); 
 }

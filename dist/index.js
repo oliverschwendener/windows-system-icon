@@ -42,23 +42,19 @@ exports.generateIcons = (icons, followShortcuts) => {
             });
             ps.addCommand(`Add-Type -AssemblyName System.Drawing`);
             icons.forEach((icon) => {
-                ps.addCommand(`$filePath = "${icon.inputFilePath}"`);
-                if (followShortcuts) {
-                    ps.addCommand(`if ($filePath.EndsWith(".lnk")) { Try { $sh = New-Object -ComObject WScript.Shell; $filePath = $sh.CreateShortcut($filePath).TargetPath; } Catch { <# do nothing #> } }`);
-                }
+                ps.addCommand(`$filePath = "${icon.inputFilePath}";`);
                 ps.addCommand(`$fileExists = Test-Path -Path $filePath;`);
+                if (followShortcuts) {
+                    ps.addCommand(`$filePathIsShortcutFile = $filePath.EndsWith(".lnk");`);
+                    ps.addCommand(`if ($fileExists -and $filePathIsShortcutFile) { Try { $sh = New-Object -ComObject WScript.Shell; $filePath = $sh.CreateShortcut($filePath).TargetPath; } Catch { <# do nothing #> } }`);
+                }
                 ps.addCommand(`if($fileExists) { $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($filePath); }`);
                 ps.addCommand(`if($fileExists) { $bitmap = $icon.ToBitmap().save("${icon.outputFilePath}", [System.Drawing.Imaging.ImageFormat]::${icon.outputFormat}); }`);
             });
             ps.invoke()
-                .then(() => {
-                ps.dispose();
-                resolve();
-            })
-                .catch((err) => {
-                ps.dispose();
-                reject(err);
-            });
+                .then(() => resolve())
+                .catch((err) => reject(err))
+                .then(() => ps.dispose());
         }
     });
 };
